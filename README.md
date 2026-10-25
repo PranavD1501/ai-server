@@ -18,6 +18,8 @@ python server.py
 
 ## Start chatting
 
+For SSH chat without installing anything on the customer computer, see [SSH_DEPLOY.md](SSH_DEPLOY.md). The gateway uses the Render backend and requires a separate SSH-capable host.
+
 ### No client file or dependencies
 
 With Python 3 installed, run this single command in PowerShell or a Linux/macOS terminal:
@@ -86,6 +88,12 @@ python ai.py
 Use HTTPS for remote connections. Leaving the token empty allows anyone who can reach the server to use its Gemini quota. This small personal server has no per-user rate limiting; add hosting-level limits before sharing it widely.
 
 ## Tests
+
+Install the optional gateway dependencies when running the complete suite:
+
+```sh
+python -m pip install -r requirements-ssh.txt
+```
 
 ```sh
 python -m unittest discover -s tests -v
