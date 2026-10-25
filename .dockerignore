@@ -1,0 +1,9 @@
+.git
+.env
+.env.*
+ssh-data
+.test-deps
+.venv
+venv
+__pycache__
+tests

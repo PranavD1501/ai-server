@@ -18,6 +18,8 @@ python server.py
 
 ## Start chatting
 
+For SSH chat without installing anything on the customer computer, see [SSH_DEPLOY.md](SSH_DEPLOY.md). The gateway is prepared for an SSH-capable host and uses this Render backend; a separate VPS is required.
+
 On the lab computer, download `ai.py` and `requirements-client.txt`, then run:
 
 ```sh
@@ -72,6 +74,10 @@ python ai.py
 Remote use requires the client file and Python dependencies; the URL itself does not launch an interactive shell. Use HTTPS for remote connections. Leaving the token empty allows anyone who can reach the server to use its Gemini quota. This small personal server has no per-user rate limiting; add hosting-level limits before sharing it widely.
 
 ## Tests
+
+Install the optional gateway dependencies too when running the complete suite:
+
+python -m pip install -r requirements-ssh.txt
 
 ```sh
 python -m unittest discover -s tests -v

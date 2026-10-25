@@ -1,0 +1,24 @@
+services:
+  chat:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh
+    restart: unless-stopped
+    env_file: .env.ssh
+    environment:
+      SSH_BIND_HOST: 0.0.0.0
+      SSH_PORT: '2222'
+      SSH_HOST_KEY: /data/ssh_host_ed25519_key
+    ports:
+      - '${SSH_PUBLIC_PORT:-2222}:2222'
+    volumes:
+      - ssh-host-key:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  ssh-host-key:

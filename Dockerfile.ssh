@@ -1,0 +1,11 @@
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements-ssh.txt .
+RUN pip install --no-cache-dir -r requirements-ssh.txt \
+    && useradd --uid 10001 --create-home chatapp \
+    && mkdir /data && chown chatapp:chatapp /data
+COPY ssh_gateway.py .
+USER chatapp
+ENV SSH_BIND_HOST=0.0.0.0 SSH_PORT=2222 SSH_HOST_KEY=/data/ssh_host_ed25519_key
+EXPOSE 2222
+CMD ["python", "ssh_gateway.py"]
