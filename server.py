@@ -1,9 +1,10 @@
 """Small Gemini Q&A API for the terminal client."""
 import hmac
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from google import genai
 from google.genai import types
 
@@ -15,7 +16,15 @@ client = None
 
 @app.get("/")
 def home():
-    return "AI terminal server running. Connect with: python ai.py <server-url>\n"
+    return (
+        "AI terminal server running. Start a chat with Python 3:\n"
+        'python -c "import urllib.request as u;exec(u.urlopen(\'https://ai-server-f5l7.onrender.com/cli\',timeout=90).read())"\n'
+    )
+
+
+@app.get("/cli")
+def terminal_client():
+    return send_file(Path(__file__).with_name("terminal.py"), mimetype="text/x-python", max_age=0)
 
 
 @app.get("/health")

@@ -18,7 +18,21 @@ python server.py
 
 ## Start chatting
 
-For SSH chat without installing anything on the customer computer, see [SSH_DEPLOY.md](SSH_DEPLOY.md). The gateway is prepared for an SSH-capable host and uses this Render backend; a separate VPS is required.
+For SSH chat without installing anything on the customer computer, see [SSH_DEPLOY.md](SSH_DEPLOY.md). The gateway uses the Render backend and requires a separate SSH-capable host.
+
+### No client file or dependencies
+
+With Python 3 installed, run this single command in PowerShell or a Linux/macOS terminal:
+
+```sh
+python -c "import urllib.request as u;exec(u.urlopen('https://ai-server-f5l7.onrender.com/cli',timeout=90).read())"
+```
+
+Use `python3` instead of `python` on systems that use that name. This fetches the client from your server and runs it in memory, leaving terminal input available for questions. It needs no pip packages and saves no client file. Only use a server you trust: the command executes its returned code. Code prints as Markdown fences with original indentation and line breaks. For syntax highlighting, use the installed Rich client below. `/clear` resets context and `/exit` quits.
+
+Python is still required. A Render free service may take some time to wake up on the first connection. The URL alone does not open an interactive shell.
+
+### Installed client with syntax highlighting
 
 On the lab computer, download `ai.py` and `requirements-client.txt`, then run:
 
@@ -71,13 +85,15 @@ export AI_SERVER_URL="https://your-deployed-server.example.com"
 python ai.py
 ```
 
-Remote use requires the client file and Python dependencies; the URL itself does not launch an interactive shell. Use HTTPS for remote connections. Leaving the token empty allows anyone who can reach the server to use its Gemini quota. This small personal server has no per-user rate limiting; add hosting-level limits before sharing it widely.
+Use HTTPS for remote connections. Leaving the token empty allows anyone who can reach the server to use its Gemini quota. This small personal server has no per-user rate limiting; add hosting-level limits before sharing it widely.
 
 ## Tests
 
-Install the optional gateway dependencies too when running the complete suite:
+Install the optional gateway dependencies when running the complete suite:
 
+```sh
 python -m pip install -r requirements-ssh.txt
+```
 
 ```sh
 python -m unittest discover -s tests -v
